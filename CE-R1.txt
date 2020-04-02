@@ -1,0 +1,23 @@
+hostname CE-R1
+!
+bridge-domain 10 
+ member GigabitEthernet1 service-instance 10
+ member GigabitEthernet2 service-instance 10
+!
+interface GigabitEthernet1
+ description PE1
+ no ip address
+ service instance 10 ethernet
+  encapsulation dot1q 10
+  rewrite ingress tag pop 1 symmetric
+!
+interface GigabitEthernet2
+ description PE2
+ no ip address
+ service instance 10 ethernet
+  encapsulation dot1q 10
+  rewrite ingress tag pop 1 symmetric
+!
+interface BDI10
+ description CE-R2
+ ip address 192.168.1.1 255.255.255.252

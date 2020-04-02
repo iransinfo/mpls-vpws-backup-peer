@@ -1,0 +1,11 @@
+hostname CE-R2
+!
+interface Ethernet0/0
+ description PE3
+ no ip address
+!
+interface Ethernet0/0.10
+ description CE-R1
+ encapsulation dot1Q 10
+ ip address 192.168.1.2 255.255.255.252
+

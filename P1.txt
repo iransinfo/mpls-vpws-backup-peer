@@ -1,0 +1,40 @@
+hostname P1
+!
+ip cef
+no ipv6 cef
+!
+mpls label protocol ldp
+!
+interface Loopback0
+ ip address 3.3.3.3 255.255.255.255
+!
+interface Ethernet0/0
+ description PE1
+ ip address 172.17.1.2 255.255.255.252
+ ip router isis 1
+ mpls ip
+ isis network point-to-point 
+!
+interface Ethernet0/1
+ description PE2
+ ip address 172.18.1.2 255.255.255.252
+ ip router isis 1
+ mpls ip
+ isis network point-to-point 
+!
+interface Ethernet0/2
+ description PE3
+ ip address 172.19.1.1 255.255.255.252
+ ip router isis 1
+ mpls ip
+ isis network point-to-point 
+!
+router isis 1
+ net 49.0000.0000.0000.0003.00
+ is-type level-1
+ advertise passive-only
+ metric-style wide
+ log-adjacency-changes all
+ passive-interface Loopback0
+!
+mpls ldp router-id Loopback0 force

@@ -1,0 +1,34 @@
+hostname PE3
+!
+ip cef
+no ipv6 cef
+!
+mpls label protocol ldp
+!
+interface Loopback0
+ ip address 4.4.4.4 255.255.255.255
+!
+interface Ethernet0/0
+ description P1
+ ip address 172.19.1.2 255.255.255.252
+ ip router isis 1
+ mpls ip
+ isis network point-to-point 
+!
+interface Ethernet0/1
+ description CE-R2
+ no ip address
+
+!
+interface Ethernet0/1.10
+ encapsulation dot1Q 10
+ xconnect 1.1.1.1 10 encapsulation mpls
+  backup peer 2.2.2.2 10
+!
+router isis 1
+ net 49.0000.0000.0000.0004.00
+ is-type level-1
+ advertise passive-only
+ metric-style wide
+ log-adjacency-changes all
+ passive-interface Loopback0
